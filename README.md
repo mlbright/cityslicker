@@ -13,6 +13,8 @@ npm test           # simulation, Time lapse and rule tests
 npm run build      # static site in dist/
 ```
 
+Every push to `main` is tested, built and published to GitHub Pages at <https://mlbright.github.io/cityslicker/> by [`.github/workflows/pages.yml`](.github/workflows/pages.yml).
+
 ## Controls
 
 | | |
