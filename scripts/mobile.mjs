@@ -1,0 +1,13 @@
+import { chromium } from 'playwright-core';
+const [query, out] = process.argv.slice(2);
+const browser = await chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+const page = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, hasTouch: true, isMobile: true });
+page.on('pageerror', (e) => console.log(`[pageerror] ${e.message}`));
+await page.goto(`http://localhost:5173/${query}`);
+await page.waitForFunction(() => window.app);
+await page.evaluate(() => window.app.playback.setSpeed(16));
+await page.waitForTimeout(9000);
+const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
+console.log('horizontal overflow:', overflow);
+await page.screenshot({ path: out });
+await browser.close();
